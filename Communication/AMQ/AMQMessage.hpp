@@ -108,6 +108,8 @@ class TopicName
 : public std::string
 {
 public:
+
+  TopicName( void ) = default;
   
   TopicName( const std::string & TheName )
   : std::string( TheName )

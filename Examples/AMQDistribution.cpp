@@ -581,9 +581,19 @@ int main( int NumberOfCLIOptions, char ** CLIOptionStrings )
       proton::connection_options Options( 
               Theron::AMQ::NetworkLayer::AMQProperties::ConnectionOptions() );
 
-      Options.user( User );
-      Options.password( Password );
+      // Set credentials - ensure they are not empty
+      if (!User.empty() && !Password.empty()) {
+        std::cout << "Credentials provided User: " << User << " Password: *********" << std::endl;
+        Options.user( User );
+        Options.password( Password );
+      }else{
+        std::cout << "No credentials provided" << std::endl;
+      }
 
+      std::string MECHANISM = "PLAIN";
+      Options.sasl_allowed_mechs(MECHANISM);
+      Options.sasl_allow_insecure_mechs(true);
+      Options.sasl_enabled(true);
       return Options;
     };
     
